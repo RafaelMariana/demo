@@ -15,7 +15,7 @@ private PessoaRepository pessoaRepository;
 
 @GetMapping("/pessoa/create")
 public String create() {
-    return "pessoa/create";
+    return "/pessoa/create";
 
 }
 
@@ -24,7 +24,7 @@ public String create(Pessoa pessoa) {
    
   pessoaRepository.save(pessoa);  
     
-    return "pessoa/create";
+    return "/pessoa/create";
 }
 
 
