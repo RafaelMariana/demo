@@ -6,29 +6,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "categoria")
 public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    private Long id;
 
-
-    @Column(name = "tipo", nullable = false)
+    @Column(nullable = false)
     private String tipo;
 
     public Categoria(String tipo) {
         this.tipo = tipo;
     }
-
-
-
-
-
-
-    
 }

@@ -6,9 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.Model.Bairro;
 
 @Repository
-public interface BairroRepository extends JpaRepository<Bairro,Long> {
+public interface BairroRepository extends JpaRepository<Bairro, Long>{
 
-    
 }
-
-

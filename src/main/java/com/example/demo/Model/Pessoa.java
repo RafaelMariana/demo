@@ -1,78 +1,32 @@
 package com.example.demo.Model;
 
+import org.hibernate.annotations.ColumnDefault;
 
-
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-
-
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "pessoa")
 public class Pessoa {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
-
-
-    @Column(name = "nome", nullable = false)
+    private Long id;
+    
+    @Column(name = "nome", nullable = false, length = 100, unique = false)
     private String nome;
+
+    @Column(name = "ativo", nullable = false)
+    @ColumnDefault("true")
+    private boolean ativo = true;
 
     public Pessoa(String nome){
         this.nome = nome;
     }
-
-//oi
-    // @Column(name = "cpf", nullable = false, length = 14)
-    // private String cpf;
-
-    // @Column(name = "email", nullable = false)
-    // private String email;
-
-    // @Column(name = "telefone", nullable = false)
-    // private String telefone;
-
-    // @Column(name = "nome_responsavel", nullable = false)
-    // private String nome_responsavel;
-
-    // @Column(name = "aprovado", nullable = false)
-    // private String aprovado;
-
-    // @Column(name = "data_nascimento", nullable = false)
-    // private String data_nascimento;
-
-    // @Column(name = "grau", nullable = false)
-    // private String grau;
-
-
-    // @ManyToOne
-    // private Endereco endereco;
-
-    // @ManyToMany
-    // private List<Deficiencia> deficiencias;
-    
-
-
-
-
-
-
-
 }
-
-    
-    
-    
-

@@ -13,9 +13,13 @@ public class PessoaForm {
     @NotBlank(message = "Preencha o campo nome.")
     private String nome;
 
+
     public Pessoa toEntity(){
         return new Pessoa(nome);
     }
-    
-    
+
+    public PessoaForm(Pessoa pessoa){
+        this.nome = pessoa.getNome();
+    }
+
 }

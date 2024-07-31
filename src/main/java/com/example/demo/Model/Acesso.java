@@ -1,62 +1,56 @@
 package com.example.demo.Model;
+import jakarta.persistence.*;
 
-
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.util.Date;
 
 @Entity
-@Table(name = "acesso")
+@Table(
+        name = "acesso"
+)
 public class Acesso {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
-
-
-    @Column(name = "ip", nullable = false, length = 14)
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
+    private Long id;
+    @Column(
+            nullable = false
+    )
     private String ip;
+    @Column(
+            nullable = false
+    )
+    private Date data_hora;
 
-    @Column(name = "dataehora", nullable = false, length = 14)
-    private String dataehora;  
-    
-    
-    @ManyToOne
-    @JoinColumn(name="usuario_id")
-    private Usuario usuario;
-   
-
-
-    public long getId() {
-        return this.id;
+    public Acesso() {
     }
-
-    public void setId(long id) {
-        this.id = id;
+    @ManyToOne
+    @JoinColumn(
+            name = "usuario_id"
+    )
+    private Usuario usuario;
+    public Long getId() {
+        return this.id;
     }
 
     public String getIp() {
         return this.ip;
     }
 
-    public void setIp(String ip) {
+    public Date getData_hora() {
+        return this.data_hora;
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
+    }
+
+    public void setIp(final String ip) {
         this.ip = ip;
     }
 
-    public String getDataehora() {
-        return this.dataehora;
+    public void setData_hora(final Date data_hora) {
+        this.data_hora = data_hora;
     }
 
-    public void setDataehora(String dataehora) {
-        this.dataehora = dataehora;
-    }
-
-    
-}
+   }
