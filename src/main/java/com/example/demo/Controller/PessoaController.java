@@ -10,10 +10,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.example.demo.Enum.Sexo;
 import com.example.demo.Form.Pessoa.PessoaForm;
+import com.example.demo.Model.Deficiencia;
 import com.example.demo.Model.Pessoa;
+import com.example.demo.Repository.DeficienciaRepository;
 import com.example.demo.Repository.PessoaRepository;
-
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +28,9 @@ public class PessoaController {
 
     @Autowired
     private PessoaRepository pessoaRepository;
+
+    @Autowired
+    private DeficienciaRepository deficienciaRepository;
 
     @GetMapping("/pessoa")
     public String index(Model model, @RequestParam("display") Optional<String> display){
@@ -42,14 +47,24 @@ public class PessoaController {
 
     @GetMapping("/pessoa/create")
     public String create(Model model) {
-        model.addAttribute("pessoaForm", new PessoaForm());
+        PessoaForm pessoaForm = new PessoaForm();
+        pessoaForm.setListDeficiencia(deficienciaRepository);
+
+        model.addAttribute("pessoaForm", pessoaForm);
+
+        System.out.println(Sexo.FEMININO.getCodigo());
 
         return "pessoa/create";
     }
     
     @PostMapping("/pessoa/create")
-    public String create(@Valid PessoaForm pessoaForm, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-        
+    public String create(@Valid PessoaForm pessoaForm, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {        
+        pessoaForm.setListDeficiencia(deficienciaRepository);
+
+        model.addAttribute("pessoaForm", pessoaForm);
+
+
+
         if(bindingResult.hasErrors()){
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "/pessoa/create";
@@ -112,13 +127,18 @@ public class PessoaController {
         Optional<Pessoa> pessoa = this.pessoaRepository.findById(id);
         Pessoa pessoaModel = pessoa.get();
 
-        pessoaModel.setAtivo(false);
+        if(pessoaModel.isAtivo()){
+            pessoaModel.setAtivo(false);
+            redirectAttributes.addFlashAttribute("successMessage","Excluído com sucesso!");
+
+        }else{
+            pessoaModel.setAtivo(true);
+            redirectAttributes.addFlashAttribute("successMessage","Ativado com sucesso!");
+        }
 
         this.pessoaRepository.save(pessoaModel);
-
-        redirectAttributes.addFlashAttribute("successMessage", "Excluído com sucesso!");
-
-        return "redirect:/pessoa";        
+        return "redirect:/pessoa";
+          
     }
     
     
