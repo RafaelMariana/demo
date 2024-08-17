@@ -22,7 +22,7 @@
                             </div> 
                             <div class="form-group col-md-2">
                                 <label for="sexo" class="form-label">Sexo:</label>
-                                <select class="form-control" id="sexo" name="sexo" required>
+                                <select class="form-select" id="sexo" name="sexo" required>
                                     <option th:each="sexo : ${T(com.example.demo.Enum.Sexo).values()}"
                                         th:value="${sexo.codigo}"
                                         th:text="${sexo.descricao}"
@@ -31,13 +31,35 @@
                             </div> 
                             <div class="form-group col-md-2">
                                 <label for="deficiencia" class="form-label">Deficiência:</label>
-                                <select class="form-control" id="deficiencia" name="deficiencia" required>
+                                <select class="form-select" id="deficiencia" name="deficiencia" required>
                                     <option th:each="deficiencia : *{listDeficiencia}"
                                         th:value="${deficiencia.id}"
                                         th:text="${deficiencia.nome}"
                                     </option>
                                 </select>
-                            </div>                                      
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label for="cep" class="form-label"> CEP:</label>
+                                <input id ="cep" type"text" class="form-control" placeholder="99999-999" th:field="*{cep}">                             
+                            </div>
+                            <div class="mb-2 col-md-2">
+                                <label for="uf" class="form-label">UF:</label>
+                                <input id ="uf" class="form-control"th:field="*{uf}">                             
+                            </div>
+                            <div class="mb-2 col-md-2">
+                                <label for="cidade" class="form-label">Cidade:</label>
+                                <input id ="cidade" class="form-control"th:field="*{ciade}">                             
+                            </div>
+                            <div class="mb-2 col-md-2">
+                                <label for="bairro" class="form-label">Bairro:</label>
+                                <input id ="bairro" class="form-control"th:field="*{bairro}">                             
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label for="logradouro" class="form-label">Logradouro:</label>
+                                <input id ="logradouro" class="form-control"th:field="*{logradouro}">                             
+                            </div>                         
+                         
+                                                          
                                                        
                         </div>
                         
@@ -51,5 +73,33 @@
                 </div>
             </div>    
         </form>
+        <script>
+            $("#cep").inputmask("99999-999")
+            .on("change", function(){
+                let cep = $("#cep").val();
+                cep.replace("_" , "");
+
+                $.ajax({
+                    datatype:"json",
+                    type: "get",
+                    url: "https://viacep.com.br/ws/" + cep + "/json/",
+                    success: function(response){
+                        
+                       
+                        document.getElementById("bairro").value = response['bairro'];
+                        $("#logradouro").val(response['logradouro']);
+                        $("#cidade").val(response['localidade']);
+                        $("#uf").val(response['uf']);
+
+                    
+
+
+
+                    }
+
+                });
+                
+            });
+        </script>
     </body>
 </html>
