@@ -48,7 +48,9 @@ public class PessoaController {
     @GetMapping("/pessoa/create")
     public String create(Model model) {
         PessoaForm pessoaForm = new PessoaForm();
-        pessoaForm.setListDeficiencia(deficienciaRepository);
+
+
+        pessoaForm.setListDeficiencia(deficienciaRepository.findAll());
 
         model.addAttribute("pessoaForm", pessoaForm);
 
@@ -59,9 +61,15 @@ public class PessoaController {
     
     @PostMapping("/pessoa/create")
     public String create(@Valid PessoaForm pessoaForm, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {        
-        pessoaForm.setListDeficiencia(deficienciaRepository);
+        pessoaForm.setListDeficiencia(deficienciaRepository.findAll());
 
         model.addAttribute("pessoaForm", pessoaForm);
+
+        // List<Pessoa> pessoas = pessoaRepository.findByAtivo(Boolean.valueOf(finalDisplay));
+
+        // model.addAttribute("pessoas", pessoas);
+
+   
 
 
 
@@ -71,7 +79,7 @@ public class PessoaController {
         }
 
         redirectAttributes.addFlashAttribute("successMessage", "Salvo com sucesso!");
-        pessoaRepository.save(pessoaForm.toEntity());
+        // pessoaRepository.save(pessoaForm.toEntity());
         
         return "redirect:/pessoa";
     }
@@ -113,11 +121,11 @@ public class PessoaController {
             return "/pessoa/update";
         }
 
-        Pessoa pessoa = pessoaForm.toEntity();
-        pessoa.setId(id);
+        // Pessoa pessoa = pessoaForm.toEntity();
+        // pessoa.setId(id);
 
         redirectAttributes.addFlashAttribute("successMessage", "Alterado com sucesso!");
-        this.pessoaRepository.save(pessoa);
+        // this.pessoaRepository.save(pessoa);
 
         return "redirect:/pessoa";
     }

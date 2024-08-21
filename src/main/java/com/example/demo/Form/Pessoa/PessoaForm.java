@@ -15,10 +15,12 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Data
 @Getter
+@Setter
 @NoArgsConstructor
 public class PessoaForm {
 
@@ -40,26 +42,12 @@ public class PessoaForm {
     private Deficiencia deficiencia;
     private List<Deficiencia> listDeficiencia;
 
-
-
-    public Pessoa toEntity(){
-        Sexo sexo = Sexo.fromCodigo(this.sexo);
-        Pessoa pessoa = new Pessoa(nome, nascimento, sexo);
-        pessoa.setDeficiencia(deficiencia);
-
-        return pessoa;
-    }
+   
 
     public PessoaForm(Pessoa pessoa){
         this.nome = pessoa.getNome();
     }
 
-    public void setDeficiencia(){
-
-    }
-    public void setListDeficiencia(DeficienciaRepository repository){
-        this.listDeficiencia = repository.findAll();
-    }
 
    
     @NotBlank(message = "Preencha o CEP")
