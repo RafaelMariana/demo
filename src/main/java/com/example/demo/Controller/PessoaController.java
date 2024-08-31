@@ -16,6 +16,8 @@ import com.example.demo.Model.Deficiencia;
 import com.example.demo.Model.Pessoa;
 import com.example.demo.Repository.DeficienciaRepository;
 import com.example.demo.Repository.PessoaRepository;
+import com.example.demo.Service.PessoaService;
+
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +33,9 @@ public class PessoaController {
 
     @Autowired
     private DeficienciaRepository deficienciaRepository;
+
+    @Autowired
+    private PessoaService pessoaService;
 
     @GetMapping("/pessoa")
     public String index(Model model, @RequestParam("display") Optional<String> display){
@@ -79,7 +84,8 @@ public class PessoaController {
         }
 
         redirectAttributes.addFlashAttribute("successMessage", "Salvo com sucesso!");
-        // pessoaRepository.save(pessoaForm.toEntity());
+        pessoaService.create(pessoaForm);
+       
         
         return "redirect:/pessoa";
     }

@@ -33,6 +33,14 @@ public class Pessoa {
     @Column(name = "nascimento", nullable = false)
     private LocalDate nascimento;
 
+    @ManyToOne
+    @JoinColumn(name = "deficiencia_id")
+    private Deficiencia deficiencia;
+
+    @ManyToOne
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
+
     public Pessoa(String nome, LocalDate nascimento, Sexo sexo){
         this.nome = nome;
         this.nascimento = nascimento;
@@ -46,9 +54,7 @@ public class Pessoa {
     @Enumerated(EnumType.ORDINAL)
     private Sexo sexo = Sexo.NAO_INFORMADO;
 
-    @ManyToOne
-    @JoinColumn(name = "deficiencia_id")
-    private Deficiencia deficiencia;
+  
             
     
 

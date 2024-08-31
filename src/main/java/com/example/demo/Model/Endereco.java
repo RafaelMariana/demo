@@ -22,7 +22,7 @@ public class Endereco {
     private Long id;
 
     @Column(name = "logradouro" ,nullable = false)
-    private String nome;
+    private String logradouro;
 
     @Column(name = "cep", nullable = false, length = 9)
     private String cep;
