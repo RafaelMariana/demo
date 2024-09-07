@@ -42,7 +42,6 @@ public class PessoaController {
         String finalDisplay = display.orElse("true");
 
         List<Pessoa> pessoas = pessoaRepository.findByAtivo(Boolean.valueOf(finalDisplay));
-
         model.addAttribute("pessoas", pessoas);
 
         return "pessoa/listar";
@@ -56,9 +55,7 @@ public class PessoaController {
 
 
         pessoaForm.setListDeficiencia(deficienciaRepository.findAll());
-
         model.addAttribute("pessoaForm", pessoaForm);
-
         System.out.println(Sexo.FEMININO.getCodigo());
 
         return "pessoa/create";
@@ -67,7 +64,6 @@ public class PessoaController {
     @PostMapping("/pessoa/create")
     public String create(@Valid PessoaForm pessoaForm, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {        
         pessoaForm.setListDeficiencia(deficienciaRepository.findAll());
-
         model.addAttribute("pessoaForm", pessoaForm);
 
         // List<Pessoa> pessoas = pessoaRepository.findByAtivo(Boolean.valueOf(finalDisplay));
@@ -94,10 +90,10 @@ public class PessoaController {
     public String update(@PathVariable Long id, Model model){
         Optional<Pessoa> pessoa = pessoaRepository.findById(id);
 
-        PessoaForm pessoaForm = new PessoaForm(pessoa.get());
-
+        PessoaForm pessoaForm = new PessoaForm(pessoa.orElseThrow());
+        pessoaForm.setListDeficiencia(deficienciaRepository.findAll());
         model.addAttribute("pessoaForm", pessoaForm);
-        model.addAttribute("id", pessoa.get().getId());
+        model.addAttribute("id", pessoa.orElseThrow().getId());
 
         return "/pessoa/update";
     }
@@ -107,6 +103,8 @@ public class PessoaController {
         Optional<Pessoa> pessoa = pessoaRepository.findById(id);
 
         PessoaForm pessoaForm = new PessoaForm(pessoa.get());
+
+        pessoaForm.setListDeficiencia(deficienciaRepository.findAll());
 
         model.addAttribute("pessoaForm", pessoaForm);
         model.addAttribute("id", pessoa.get().getId());
@@ -121,14 +119,19 @@ public class PessoaController {
         BindingResult bindingResult, 
         Model model, 
         RedirectAttributes redirectAttributes
-    ){
+    ){   
+        pessoaForm.setListDeficiencia(deficienciaRepository.findAll());
+
+        model.addAttribute("pessoaForm",pessoaForm);
+
         if(bindingResult.hasErrors()){
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "/pessoa/update";
         }
 
-        // Pessoa pessoa = pessoaForm.toEntity();
-        // pessoa.setId(id);
+        pessoaService.update(pessoaForm, id); 
+
+      
 
         redirectAttributes.addFlashAttribute("successMessage", "Alterado com sucesso!");
         // this.pessoaRepository.save(pessoa);

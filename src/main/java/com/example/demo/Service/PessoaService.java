@@ -69,6 +69,41 @@ public class PessoaService {
 
 
     }
+    public Pessoa update(PessoaForm pessoaForm, Long id){
+        Pessoa pessoa = this.pessoaRepository.findById(id).orElseThrow();
+
+
+        pessoa.setNome(pessoaForm.getNome());
+        pessoa.setNascimento(pessoaForm.getNascimento());
+        pessoa.setDeficiencia(pessoaForm.getDeficiencia());
+
+        Sexo sexo = Sexo.fromCodigo(pessoaForm.getSexo());
+        pessoa.setSexo(sexo);
+
+
+        Endereco endereco = new Endereco();
+        endereco.setCep(pessoaForm.getCep());
+        endereco.setLogradouro(pessoaForm.getLogradouro());
+
+        Cidade cidade = this.cidadeRepository.findCidadeByNome(pessoaForm.getCidade());
+        Bairro bairro = this.bairroRepository.findBairroByNomeAndCidade(pessoaForm.getBairro(),cidade.getId());
+
+        endereco.setBairro(bairro);
+        endereco.setNumero(pessoaForm.getNumero());
+        endereco.setComplemento(pessoaForm.getComplemento());
+
+        pessoa.setEndereco(endereco);
+        this.enderecoRepository.save(endereco);
+
+
+        this.pessoaRepository.save(pessoa);
+
+
+
+        return pessoa;
+
+
+    }
     
     
     
