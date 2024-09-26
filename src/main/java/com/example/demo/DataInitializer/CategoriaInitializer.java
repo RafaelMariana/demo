@@ -1,6 +1,6 @@
 package com.example.demo.DataInitializer;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Component;
 
 import com.example.demo.Model.Categoria;
