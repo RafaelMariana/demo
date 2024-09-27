@@ -23,10 +23,11 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String tipo;
+    @Column(name = "nome" , nullable = false , length = 100)
+    private String nome;   
 
-    public Categoria(String tipo) {
-        this.tipo = tipo;
+    public Categoria(String nome){
+        this.nome = nome;
     }
+    
 }

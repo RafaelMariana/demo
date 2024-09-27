@@ -12,7 +12,7 @@ public interface BairroRepository extends JpaRepository<Bairro, Long>{
 
 
    @Query("SELECT b FROM Bairro b WHERE b.nome = :nome AND b.cidade.id = :cidadeId")
-   Bairro findBairroByNomeAndCidade(@Param("nome")String bairroNome, @Param("cidadeId") Long cidadeID);
+   Bairro findBairroByNomeAndCidade(@Param("nome")String bairroNome, @Param("cidadeId") Long cidadeId);
 
 
 }

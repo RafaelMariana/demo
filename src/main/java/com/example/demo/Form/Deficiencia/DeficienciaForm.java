@@ -2,6 +2,7 @@ package com.example.demo.Form.Deficiencia;
 
 import java.util.List;
 
+import com.example.demo.Model.Categoria;
 import com.example.demo.Model.Deficiencia;
 
 import jakarta.validation.constraints.NotBlank;
@@ -16,13 +17,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 
-public class DeficianciaForm {
+public class DeficienciaForm {
 
     @NotBlank(message = "Preencha o campo nome.")
     private String nome;
 
     @NotNull(message = "Preencha o campo")
-    private Deficiencia deficiencia;
-    private List<Deficiencia> listDeficiencia;
+    private Categoria categoria;
+    private List<Categoria> listCategoria;
 
 }
