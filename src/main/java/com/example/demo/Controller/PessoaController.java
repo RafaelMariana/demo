@@ -112,13 +112,7 @@ public class PessoaController {
     }
     
     @PostMapping("/pessoa/update/{id}")
-    public String update(
-        @PathVariable Long id, 
-        @Valid PessoaForm pessoaForm, 
-        BindingResult bindingResult, 
-        Model model, 
-        RedirectAttributes redirectAttributes
-    ){   
+    public String update(@PathVariable Long id,@Valid PessoaForm pessoaForm,BindingResult bindingResult, Model model,RedirectAttributes redirectAttributes){   
         pessoaForm.setListDeficiencia(deficienciaRepository.findAll());
 
         model.addAttribute("pessoaForm",pessoaForm);

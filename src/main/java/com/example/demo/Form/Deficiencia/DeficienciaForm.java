@@ -26,4 +26,11 @@ public class DeficienciaForm {
     private Categoria categoria;
     private List<Categoria> listCategoria;
 
+    public  DeficienciaForm(Deficiencia deficiencia){
+        this.nome = deficiencia.getNome();
+        this.categoria = deficiencia.getCategoria();
+
+       
+    }
+
 }
