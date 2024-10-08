@@ -22,11 +22,15 @@ import com.example.demo.Repository.PessoaRepository;
 import com.example.demo.Service.DeficienciaService;
 import com.example.demo.Service.PessoaService;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @Controller
@@ -40,6 +44,15 @@ public class DeficienciaController {
 
     @Autowired
     private DeficienciaRepository deficienciaRepository;
+
+    @Operation(description = "Busca todas as deficiências")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "tudo certo"),
+        @ApiResponse(responseCode = "400", description = "não encontrado deficência"),
+        @ApiResponse(responseCode = "404", description = "Página não encontrada")
+       
+    } )
+  
     
     @GetMapping("/deficiencia")
     public String index(Model model, @RequestParam("display") Optional<String> display){
@@ -49,6 +62,13 @@ public class DeficienciaController {
         model.addAttribute("deficiencia", deficiencias);     
         return "deficiencia/listar";
     }
+    @Operation(description = "Busca todas as deficiências")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "tudo certo"),
+        @ApiResponse(responseCode = "400", description = "não encontrado"),
+        @ApiResponse(responseCode = "404", description = "Página não encontrada")
+       
+    } )
 
     @GetMapping("/deficiencia/create")
     public String create(Model model) {
@@ -58,6 +78,13 @@ public class DeficienciaController {
         model.addAttribute("deficienciaForm", deficienciaForm);  
         return "deficiencia/create"; 
     }
+    @Operation(description = "Busca todas as deficiências")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "tudo certo"),
+        @ApiResponse(responseCode = "400", description = "não encontrado deficência"),
+        @ApiResponse(responseCode = "404", description = "Página não encontrada")
+       
+    } )
 
     @PostMapping("/deficiencia/create")
     public String create(@Valid DeficienciaForm deficienciaForm, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
@@ -77,6 +104,14 @@ public class DeficienciaController {
         
         return "redirect:/deficiencia";
     }
+    @Operation(description = "Atualiza todas as deficiências")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "tudo certo"),
+        @ApiResponse(responseCode = "400", description = "não encontrado deficência"),
+        @ApiResponse(responseCode = "404", description = "Página não encontrada")
+       
+    } )
+    
 
     @GetMapping("/deficiencia/update/{id}")
     public String update(@PathVariable Long id,Model model){
@@ -88,6 +123,13 @@ public class DeficienciaController {
         model.addAttribute("id", deficiencia.orElseThrow().getId());
         return "/deficiencia/update";   
     }
+    @Operation(description = "Salvar todas as deficiências")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "tudo certo"),
+        @ApiResponse(responseCode = "400", description = "não encontrado deficência"),
+        @ApiResponse(responseCode = "404", description = "Página não encontrada")
+       
+    } )
 
     @PostMapping("/deficiencia/update/{id}")
     public String update(@PathVariable Long id,@Valid DeficienciaForm deficienciaForm,BindingResult bindingResult,Model model, RedirectAttributes redirectAttributes){
@@ -104,6 +146,13 @@ public class DeficienciaController {
         redirectAttributes.addFlashAttribute("successMessage", "Alterado com sucesso!");
         return "redirect:/deficiencia";   
     }
+    @Operation(description = "Remover todas as deficiências")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "tudo certo"),
+        @ApiResponse(responseCode = "400", description = "não encontrado deficência"),
+        @ApiResponse(responseCode = "404", description = "Página não encontrada")
+       
+    } )
 
 
     @GetMapping("/deficiencia/remover/{id}")
@@ -122,6 +171,13 @@ public class DeficienciaController {
         this.deficienciaRepository.save(deficienciaModel);
         return "redirect:/deficiencia";      
     } 
+    @Operation(description = "Visualiza todas as deficiências")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "tudo certo"),
+        @ApiResponse(responseCode = "400", description = "não encontrado deficência"),
+        @ApiResponse(responseCode = "404", description = "Página não encontrada")
+       
+    } )
 
     @GetMapping("/deficiencia/visualizar/{id}")
     public String visualizar(@PathVariable Long id, Model model){
